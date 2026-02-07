@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Shivani 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+
+body{
+  background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+  height:100vh;
+  overflow:hidden;
+}
+
+/* STORY CONTAINER */
+.story{
+  position:absolute;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+/* TOP PROGRESS */
+.progress{
+  position:absolute;
+  top:12px;
+  left:12px;
+  right:12px;
+  display:flex;
+  gap:6px;
+  z-index:5;
+}
+.bar{
+  flex:1;
+  height:4px;
+  background:rgba(255,255,255,0.4);
+  border-radius:5px;
+  overflow:hidden;
+}
+.fill{
+  height:100%;
+  width:0%;
+  background:white;
+  transition:width 0.4s ease;
+}
+
+/* CARD */
+.card{
+  background:#fff;
+  width:350px;
+  padding:22px;
+  border-radius:24px;
+  text-align:center;
+  box-shadow:0 20px 40px rgba(0,0,0,0.25);
+  animation:pop 0.7s ease;
+}
+
+@keyframes pop{
+  from{transform:scale(0.7);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+
+h1{
+  font-family:'Pacifico',cursive;
+  color:#ff4d6d;
+  margin-bottom:10px;
+}
+
+p{
+  color:#555;
+  font-size:14px;
+  margin-bottom:12px;
+}
+
+img{
+  width:100%;
+  border-radius:18px;
+  margin-bottom:8px;
+}
+
+button{
+  padding:10px 22px;
+  border:none;
+  border-radius:25px;
+  background:#ff4d6d;
+  color:#fff;
+  font-size:14px;
+  cursor:pointer;
+  margin:6px;
+  transition:0.3s;
+}
+button:hover{transform:scale(1.05);background:#ff1e4d;}
+
+.heart{
+  font-size:48px;
+  animation:beat 1.2s infinite;
+}
+@keyframes beat{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.2)}
+}
+
+/* MUSIC BUTTON */
+.music-btn{
+  position:absolute;
+  bottom:20px;
+  right:20px;
+  background:#fff;
+  color:#ff4d6d;
+  padding:10px 14px;
+  border-radius:50%;
+  box-shadow:0 10px 20px rgba(0,0,0,0.2);
+  cursor:pointer;
+  z-index:6;
+}
+
+/* FLOATING HEARTS */
+.floating{
+  position:absolute;
+  bottom:-20px;
+  font-size:18px;
+  opacity:0.7;
+  animation:float 6s linear infinite;
+}
+@keyframes float{
+  0%{transform:translateY(0);opacity:0}
+  20%{opacity:1}
+  100%{transform:translateY(-110vh);opacity:0}
+}
+
+/* STORY SLIDES */
+.slide{display:none;}
+.slide.active{display:block;}
+</style>
+</head>
+
+<body>
+
+<!-- BACKGROUND MUSIC -->
+<audio id="bgMusic" src="music.mp3" loop muted></audio>
+
+<div class="music-btn" onclick="toggleMusic()">🎵</div>
+
+<div class="story">
+
+  <!-- PROGRESS BARS -->
+  <div class="progress">
+    <div class="bar"><div class="fill" id="f1"></div></div>
+    <div class="bar"><div class="fill" id="f2"></div></div>
+    <div class="bar"><div class="fill" id="f3"></div></div>
+    <div class="bar"><div class="fill" id="f4"></div></div>
+  </div>
+
+  <!-- SLIDE 1 -->
+  <div class="card slide active">
+    <div class="heart">💖</div>
+    <h1>Hey Shivani</h1>
+    <p>I made this little story just for you 🌸</p>
+    <button onclick="next()">Tap to continue ➡️</button>
+  </div>
+
+  <!-- SLIDE 2 -->
+  <div class="card slide">
+    <h1>Why You’re Special ✨</h1>
+    <p>
+      You have a calm presence 🌷<br>
+      A gentle way of being 💕<br>
+      And a smile that feels comforting 🌈
+    </p>
+    <button onclick="next()">Next ➡️</button>
+  </div>
+
+  <!-- SLIDE 3 -->
+  <div class="card slide">
+    <h1>Little Moments 💗</h1>
+    <img src="pic1.jpg">
+    <p>
+      This photo feels peaceful and real 🌿  
+      Just you, naturally you — soft and beautiful.
+    </p>
+    <img src="pic2.jpg">
+    <p>
+      This one feels thoughtful 🌸  
+      Like someone with a kind heart and quiet strength.
+    </p>
+    <button onclick="next()">Almost there 💝</button>
+  </div>
+
+  <!-- SLIDE 4 -->
+  <div class="card slide">
+    <div class="heart">💍</div>
+    <h1>One Question</h1>
+    <p>
+      Nothing fancy… just something honest from me 💕
+    </p>
+    <p style="font-weight:600;color:#ff4d6d;">
+      Will you be my Valentine, Shivani? 🌹
+    </p>
+    <button onclick="restart()">Replay 🔁</button>
+  </div>
+
+</div>
+
+<script>
+let current=0;
+const slides=document.querySelectorAll('.slide');
+const fills=[f1,f2,f3,f4];
+const music=document.getElementById('bgMusic');
+
+function updateProgress(){
+  fills.forEach((f,i)=>{
+    f.style.width = i<=current ? "100%" : "0%";
+  });
+}
+
+function next(){
+  if(current < slides.length-1){
+    slides[current].classList.remove('active');
+    current++;
+    slides[current].classList.add('active');
+    updateProgress();
+  }
+}
+
+function restart(){
+  slides[current].classList.remove('active');
+  current=0;
+  slides[0].classList.add('active');
+  updateProgress();
+}
+
+function toggleMusic(){
+  if(music.muted){
+    music.muted=false;
+    music.play();
+  }else{
+    music.muted=true;
+  }
+}
+
+/* Floating hearts */
+setInterval(()=>{
+  const h=document.createElement('div');
+  h.className='floating';
+  h.innerHTML='💗';
+  h.style.left=Math.random()*100+'vw';
+  h.style.animationDuration=4+Math.random()*3+'s';
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),7000);
+},500);
+
+updateProgress();
+</script>
+
+</body>
+</html>
